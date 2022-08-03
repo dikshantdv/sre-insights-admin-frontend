@@ -1,0 +1,26 @@
+.project-title {
+  font-family: "Kanit", sans-serif;
+  color: #011e35;
+  font-size: 3rem;
+  display: inline-block;
+  width: calc(100vw - 436.08px);
+  margin:0;
+}
+
+.tab {
+  background-image: linear-gradient(to right, white, #889ca9);
+  height: 60px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  gap:20px;
+  padding-left:7.5px;
+  padding-right:20px;
+}
+
+.logoimg {
+  display: "inline-block";
+  width: 50px;
+}

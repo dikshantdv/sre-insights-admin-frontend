@@ -1,0 +1,22 @@
+export const TRANSLATIONS_EN = {
+  Title: "SRE INSIGHTS ADMIN",
+  taskSearch: "Search Task",
+  buttonText: "ADD TASK",
+  phJob: "Select Job",
+  phEnvironment: "Select Envirnoment",
+  phHolder: "Please select",
+  c1: "SR. NO.",
+  c2: "TASK",
+  c3: "ENVIRONMENT",
+  c4: "RESPONSE",
+  c5: "DUE AT",
+  c6: "MODIFIED AT",
+  c7: "STATUS",
+  c8: "RESCHEDULE",
+  schedule: "ADD",
+  changelang: "Change Language",
+  close: "close",
+  fcopyright:
+    "Copyright © 2022 SRE Insights Admin. All rights reserved by DeCurtis International Pvt. Ltd.",
+  fcredits: "Developed by: Arunabh, Dikshant, Niharika, Mohini, Gaurav",
+};
