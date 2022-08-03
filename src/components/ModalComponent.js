@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { EyeOutlined } from "@ant-design/icons";
 import Dropdown from "./Dropdown";
 import "./styles/ModalComponent.css";
-import { asyncPost, asyncFetchEnvironments } from "../hooks/use-api";
+import { useApi } from "../hooks/api-hook";
 
 const ModalComponent = (props) => {
   // For globalization
@@ -14,7 +14,7 @@ const ModalComponent = (props) => {
   const [selectedEnvironment, setSelectedEnvironment] = useState(undefined);
   const [selectedJob, setSelectedJob] = useState(undefined);
   const [environments, setEnvironments] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, sendRequest } = useApi();
 
   // To handle modal visibility
   const showModal = () => {
@@ -24,18 +24,19 @@ const ModalComponent = (props) => {
   // For sending request to get linked environment list
   useEffect(() => {
     if (selectedJob !== undefined && selectedJob.value !== "") {
-      asyncFetchEnvironments(
-        selectedJob.key,
-        setEnvironments,
-        setIsError,
-        setIsLoading
-      );
+      const fetchLookUp = async () => {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
+        );
+        setEnvironments(responseData.environments);
+      };
+      fetchLookUp();
     }
     if (selectedJob === undefined || selectedJob.value !== "") {
       setEnvironments([]);
       setSelectedEnvironment("");
     }
-  }, [selectedJob]);
+  }, [selectedJob, sendRequest]);
 
   //For validating dropdown input selection and sending task scheduling request
   const handleOk = () => {
@@ -47,13 +48,7 @@ const ModalComponent = (props) => {
       selectedEnvironment.value !== ""
     ) {
       setIsModalVisible(false);
-      asyncPost(
-        selectedJob.key,
-        selectedEnvironment.key,
-        props.setData,
-        props.setSearchData,
-        props.setIsLoading
-      );
+      props.createTask(selectedJob.key, selectedEnvironment.key);
       setIsError({});
     } else {
       if (
