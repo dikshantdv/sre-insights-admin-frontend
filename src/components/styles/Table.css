@@ -25,8 +25,8 @@
   min-height: 30.625rem;
 }
 .ant-table-thead > tr > th {
-  background: #0474cc;
-  color: white;
+  background-color: #0474cc !important;
+  color: white !important;
   text-align: center !important;
 }
 tr:nth-child(odd) {

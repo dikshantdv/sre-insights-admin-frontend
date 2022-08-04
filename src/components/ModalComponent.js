@@ -1,10 +1,10 @@
-import { Button, Modal, Spin } from "antd";
+import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import React, { Fragment, useEffect, useState } from "react";
+import { Button, Modal, Spin } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import Dropdown from "./Dropdown";
-import "./styles/ModalComponent.css";
 import { useApi } from "../hooks/api-hook";
+import "./styles/ModalComponent.css";
 
 const ModalComponent = (props) => {
   // For globalization

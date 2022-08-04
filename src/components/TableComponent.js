@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Table, Button, Tag } from "antd";
 import { HistoryOutlined } from "@ant-design/icons";
@@ -31,7 +31,7 @@ const TableComponent = (props) => {
   //Defining columns of Table
   const columns = [
     {
-      title: t("c1"),
+      title: t("srno"),
       dataIndex: "key",
       key: "key",
       width: "4vw",
@@ -40,7 +40,7 @@ const TableComponent = (props) => {
       render: (value, item, index) => (page - 1) * 10 + index + 1,
     },
     {
-      title: t("c2"),
+      title: t("task"),
       dataIndex: "taskname",
       key: "taskname",
       align: "left",
@@ -50,7 +50,7 @@ const TableComponent = (props) => {
       },
     },
     {
-      title: t("c3"),
+      title: t("environment"),
       dataIndex: "environmentname",
       key: "environmentname",
       align: "center",
@@ -61,7 +61,7 @@ const TableComponent = (props) => {
     },
 
     {
-      title: t("c4"),
+      title: t("responsedata"),
       dataIndex: "responsedata",
       key: "responsedata",
       align: "center",
@@ -70,7 +70,7 @@ const TableComponent = (props) => {
       render: (value) => <ModalComponent responseData={value} />,
     },
     {
-      title: t("c5"),
+      title: t("dueat"),
       width: "8vw",
       dataIndex: "dueat",
       key: "dueat",
@@ -84,7 +84,7 @@ const TableComponent = (props) => {
     },
 
     {
-      title: t("c6"),
+      title: t("modifiedat"),
       dataIndex: "modifiedat",
       key: "modifiedat",
       align: "center",
@@ -97,7 +97,7 @@ const TableComponent = (props) => {
       },
     },
     {
-      title: t("c7"),
+      title: t("status"),
       dataIndex: "status",
       key: "status",
       align: "center",
@@ -133,7 +133,7 @@ const TableComponent = (props) => {
       },
     },
     {
-      title: t("c8"),
+      title: t("reschedule"),
       data: "",
       key: "key",
       align: "center",

@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import { useTranslation } from "react-i18next";
 import SearchBar from "./SearchBar";
 import ModalComponent from "./ModalComponent";
-import { useTranslation } from "react-i18next";
 import "./styles/Header.css";
 
 const Header = (props) => {
