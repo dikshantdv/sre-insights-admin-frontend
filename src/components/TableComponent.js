@@ -143,7 +143,9 @@ const TableComponent = (props) => {
         <Button
           align="center"
           style={{ width: "100%" }}
-          onClick={() => props.scheduleHandler(record)}
+          onClick={() =>
+            props.scheduleHandler(record.jobid, record.environmentid)
+          }
         >
           <HistoryOutlined />
         </Button>

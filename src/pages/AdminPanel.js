@@ -1,43 +1,40 @@
 import { Fragment, useEffect, useState } from "react";
 import Header from "../components/Header";
 import TableComponent from "../components/TableComponent";
-import { asyncFetch, asyncPost } from "../hooks/use-api";
 import Copyright from "../components/copyright";
+import { useApi } from "../hooks/api-hook";
 
 const AdminPanel = () => {
+  const { isLoading, sendRequest } = useApi();
   const [data, setData] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [jobs, setJobs] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch Table Data and Jobs
   useEffect(() => {
-    // <<<<<<< HEAD
-    //     sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`).then((json) => {
-    //       setData(json.tasks);
-    //       setSearchData(json.tasks);
-    //       setJobs(json.jobs);
-    //     });
-    //   }, [sendRequest]);
-    // =======
-    asyncFetch(setIsLoading, setData, setSearchData, setJobs);
-    // const interval = setInterval(() => {
-    // asyncFetch(setIsLoading, setData, setSearchData, setJobs);
-    // }, 120000);
-    // >>>>>>> parent of c1a7d47 (hook corrected)
+    const fetchLookUp = async () => {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/data`
+      );
+      setData(responseData.tasks);
+      setSearchData(responseData.tasks);
+      setJobs(responseData.jobs);
+    };
+    fetchLookUp();
+  }, [sendRequest]);
 
-    // return () => clearInterval(interval);
-  }, []);
-
-  // To Handle Reschedules
-  const scheduleHandler = (record) => {
-    asyncPost(
-      record.jobid,
-      record.environmentid,
-      setData,
-      setSearchData,
-      setIsLoading
-    );
+  // To Handle Reschedules and task creation
+  const TaskCreationHandler = (job_id, environment_id) => {
+    const body = JSON.stringify({
+      job_id,
+      environment_id,
+    });
+    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`, "POST", body, {
+      "Content-Type": "application/json",
+    }).then((json) => {
+      setData(json.tasks);
+      setSearchData(json.tasks);
+    });
   };
 
   // To Search Data through search bar
@@ -58,16 +55,14 @@ const AdminPanel = () => {
     <Fragment>
       <Header
         jobs={jobs}
-        setData={setData}
-        setSearchData={setSearchData}
-        setIsLoading={setIsLoading}
         handleSearch={handleSearch}
         isLoading={isLoading}
+        createTask={TaskCreationHandler}
       />
       <TableComponent
         data={searchData}
         isLoading={isLoading}
-        scheduleHandler={scheduleHandler}
+        scheduleHandler={TaskCreationHandler}
       />
       <Copyright />
     </Fragment>
