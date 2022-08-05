@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import Header from "../components/Header";
 import TableComponent from "../components/TableComponent";
 import Copyright from "../components/copyright";
-import { useApi } from "../hooks/api-hook";
+import { useApi } from "../hooks/api_hook";
 
 const AdminPanel = () => {
   const { isLoading, sendRequest } = useApi();
@@ -12,15 +12,13 @@ const AdminPanel = () => {
 
   // Fetch Table Data and Jobs
   useEffect(() => {
-    const fetchLookUp = async () => {
-      const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/data`
-      );
-      setData(responseData.tasks);
-      setSearchData(responseData.tasks);
-      setJobs(responseData.jobs);
-    };
-    fetchLookUp();
+    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`).then(
+      (responseData) => {
+        setData(responseData.tasks);
+        setSearchData(responseData.tasks);
+        setJobs(responseData.jobs);
+      }
+    );
   }, [sendRequest]);
 
   // To Handle Reschedules and task creation
