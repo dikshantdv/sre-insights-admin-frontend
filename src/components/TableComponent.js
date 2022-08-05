@@ -165,7 +165,6 @@ const TableComponent = (props) => {
           size="small"
           bordered
           pagination={{
-            total: props.data.length,
             showSizeChanger: false,
             size: "default",
             onChange(current) {

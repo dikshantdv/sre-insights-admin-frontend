@@ -5,21 +5,22 @@ import Copyright from "../components/copyright";
 import { useApi } from "../hooks/api_hook";
 
 const AdminPanel = () => {
-  const { isLoading, sendRequest } = useApi();
+  const { fetchedData, isLoading, sendRequest } = useApi();
   const [data, setData] = useState([]);
   const [searchData, setSearchData] = useState([]);
-  const [jobs, setJobs] = useState({});
+  const [jobs, setJobs] = useState([]);
 
-  // Fetch Table Data and Jobs
   useEffect(() => {
-    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`).then(
-      (responseData) => {
-        setData(responseData.tasks);
-        setSearchData(responseData.tasks);
-        setJobs(responseData.jobs);
-      }
-    );
-  }, [sendRequest]);
+    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`);
+    //eslint-disable-next-line
+  }, []);
+  useEffect(() => {
+    if (fetchedData !== undefined) {
+      setData(fetchedData.tasks);
+      setSearchData(fetchedData.tasks);
+      setJobs(fetchedData.jobs);
+    }
+  }, [fetchedData]);
 
   // To Handle Reschedules and task creation
   const TaskCreationHandler = (job_id, environment_id) => {
@@ -29,23 +30,20 @@ const AdminPanel = () => {
     });
     sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`, "POST", body, {
       "Content-Type": "application/json",
-    }).then((json) => {
-      setData(json.tasks);
-      setSearchData(json.tasks);
     });
   };
 
   // To Search Data through search bar
   const handleSearch = (value) => {
-    const filteredTask = data.filter((tasks) => {
+    const filteredTask = searchData.filter((tasks) => {
       return tasks.taskname
         .toLowerCase()
         .startsWith(value.toLowerCase().trim());
     });
     if (value.length < 1) {
-      setSearchData(data);
+      setData(searchData);
     } else {
-      setSearchData(filteredTask);
+      setData(filteredTask);
     }
   };
 
@@ -58,7 +56,7 @@ const AdminPanel = () => {
         createTask={TaskCreationHandler}
       />
       <TableComponent
-        data={searchData}
+        data={data}
         isLoading={isLoading}
         scheduleHandler={TaskCreationHandler}
       />

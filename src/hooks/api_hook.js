@@ -1,38 +1,31 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 export const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-
-  const sendRequest = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(url, {
-          method,
-          body,
-          headers,
-        });
-        const responseData = await response.json();
-
+  const [fetchedData, setFetchedData] = useState({});
+  const sendRequest = (url, method = "GET", body = null, headers = {}) => {
+    setIsLoading(true);
+    fetch(url, {
+      method,
+      body,
+      headers,
+    })
+      .then((response) => {
         if (!response.ok) {
-          throw new Error(responseData.message);
+          throw new Error(response.message);
         }
-
+        return response.json();
+      })
+      .then((json) => {
         setIsLoading(false);
-        return responseData;
-      } catch (err) {
+        setFetchedData(json);
+      })
+      .catch((err) => {
         setError(err.message);
         setIsLoading(false);
         throw err;
-      }
-    },
-    []
-  );
-
-  const clearError = () => {
-    setError(null);
+      });
   };
-
-  return { isLoading, error, sendRequest, clearError };
+  return { isLoading, error, fetchedData, sendRequest };
 };

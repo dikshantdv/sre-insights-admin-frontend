@@ -25,7 +25,7 @@ const Dropdown = (props) => {
       value={props.value}
       options={props.options}
       dropdownClassName={
-        props.options.length > 6 ? "bigDropdown" : "smallDropDown"
+        props.options?.length > 6 ? "bigDropdown" : "smallDropDown"
       }
       placeholder={props.placeholder || t("phHolder")}
       style={{

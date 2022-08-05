@@ -14,7 +14,7 @@ const ModalComponent = (props) => {
   const [selectedEnvironment, setSelectedEnvironment] = useState(undefined);
   const [selectedJob, setSelectedJob] = useState(undefined);
   const [environments, setEnvironments] = useState([]);
-  const { isLoading, sendRequest } = useApi();
+  const { isLoading, sendRequest, fetchedData } = useApi();
 
   // To handle modal visibility
   const showModal = () => {
@@ -26,15 +26,20 @@ const ModalComponent = (props) => {
     if (selectedJob !== undefined && selectedJob.value !== "") {
       sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
-      ).then((responseData) => {
-        setEnvironments(responseData.environments);
-      });
+      );
     }
     if (selectedJob === undefined || selectedJob.value !== "") {
       setEnvironments([]);
       setSelectedEnvironment("");
     }
-  }, [selectedJob, sendRequest]);
+  }, [selectedJob]);
+
+  useEffect(() => {
+    if (fetchedData !== null) {
+      setEnvironments(fetchedData.environments);
+      console.log(fetchedData);
+    }
+  }, [fetchedData]);
 
   //For validating dropdown input selection and sending task scheduling request
   const handleOk = () => {
@@ -127,7 +132,7 @@ const ModalComponent = (props) => {
                     ? ""
                     : selectedEnvironment.value
                 }
-                disabled={environments.length === 0}
+                disabled={environments ? environments.length === 0 : true}
                 options={environments}
                 setSelectedOption={setSelectedEnvironment}
               />
