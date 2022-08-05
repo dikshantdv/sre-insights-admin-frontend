@@ -3,8 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Button, Modal, Spin } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import Dropdown from "./Dropdown";
-import { useApi } from "../hooks/api-hook";
+// <<<<<<< HEAD
+// import { useApi } from "../hooks/api-hook";
+// import "./styles/ModalComponent.css";
+// =======
 import "./styles/ModalComponent.css";
+import { asyncPost, asyncFetchEnvironments } from "../hooks/use-api";
+// >>>>>>> parent of c1a7d47 (hook corrected)
 
 const ModalComponent = (props) => {
   // For globalization
@@ -14,7 +19,7 @@ const ModalComponent = (props) => {
   const [selectedEnvironment, setSelectedEnvironment] = useState(undefined);
   const [selectedJob, setSelectedJob] = useState(undefined);
   const [environments, setEnvironments] = useState([]);
-  const { isLoading, sendRequest } = useApi();
+  const [isLoading, setIsLoading] = useState(false);
 
   // To handle modal visibility
   const showModal = () => {
@@ -24,17 +29,26 @@ const ModalComponent = (props) => {
   // For sending request to get linked environment list
   useEffect(() => {
     if (selectedJob !== undefined && selectedJob.value !== "") {
-      sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
-      ).then((json) => {
-        setEnvironments(json.environments);
-      });
+      // <<<<<<< HEAD
+      //       sendRequest(
+      //         `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
+      //       ).then((json) => {
+      //         setEnvironments(json.environments);
+      //       });
+      // =======
+      asyncFetchEnvironments(
+        selectedJob.key,
+        setEnvironments,
+        setIsError,
+        setIsLoading
+      );
+      // >>>>>>> parent of c1a7d47 (hook corrected)
     }
     if (selectedJob === undefined || selectedJob.value !== "") {
       setEnvironments([]);
       setSelectedEnvironment("");
     }
-  }, [selectedJob, sendRequest]);
+  }, [selectedJob]);
 
   //For validating dropdown input selection and sending task scheduling request
   const handleOk = () => {
@@ -46,7 +60,13 @@ const ModalComponent = (props) => {
       selectedEnvironment.value !== ""
     ) {
       setIsModalVisible(false);
-      props.createTask(selectedJob.key, selectedEnvironment.key);
+      asyncPost(
+        selectedJob.key,
+        selectedEnvironment.key,
+        props.setData,
+        props.setSearchData,
+        props.setIsLoading
+      );
       setIsError({});
     } else {
       if (
