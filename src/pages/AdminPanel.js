@@ -2,21 +2,22 @@ import { Fragment, useEffect, useState } from "react";
 import Header from "../components/Header";
 import TableComponent from "../components/TableComponent";
 import Copyright from "../components/copyright";
-import { useApi } from "../hooks/api_hook";
+import { useApi } from "../hooks/api-hook";
 
 const AdminPanel = () => {
+  const { isLoading, sendRequest } = useApi();
   const [data, setData] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [jobs, setJobs] = useState({});
-  const [isLoading, setIsLoading] = useState({});
 
   // Fetch Table Data and Jobs
-  // const { isLoading, fetchedData } = useApi(
-  //   `${process.env.REACT_APP_BACKEND_URL}/data`
-  // );
-  // setData(fetchedData.tasks);
-  // setSearchData(fetchedData.tasks);
-  // setJobs(fetchedData.jobs);
+  useEffect(() => {
+    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`).then((json) => {
+      setData(json.tasks);
+      setSearchData(json.tasks);
+      setJobs(json.jobs);
+    });
+  }, [sendRequest]);
 
   // To Handle Reschedules and task creation
   const TaskCreationHandler = (job_id, environment_id) => {
@@ -24,12 +25,12 @@ const AdminPanel = () => {
       job_id,
       environment_id,
     });
-    // sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`, "POST", body, {
-    //   "Content-Type": "application/json",
-    // }).then((json) => {
-    //   setData(json.tasks);
-    //   setSearchData(json.tasks);
-    // });
+    sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`, "POST", body, {
+      "Content-Type": "application/json",
+    }).then((json) => {
+      setData(json.tasks);
+      setSearchData(json.tasks);
+    });
   };
 
   // To Search Data through search bar

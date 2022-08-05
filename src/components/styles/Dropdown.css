@@ -1,9 +1,9 @@
 .ant-cascader-menu {
-  min-width: 300px;
-  height: 100%;
+  min-width: 300px !important;
+  height: 167px !important;
 }
 
-.bigDropdown .ant-cascader-menu {
-  min-width: 300px;
-  height: 200px;
-}
+/* .bigDropdown .ant-cascader-menu { */
+/* min-width: 300px !important; */
+/* height: 200px !important; */
+/* } */

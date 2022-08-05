@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Modal, Spin } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import Dropdown from "./Dropdown";
-import { useApi } from "../hooks/api_hook";
+import { useApi } from "../hooks/api-hook";
 import "./styles/ModalComponent.css";
 
 const ModalComponent = (props) => {
@@ -24,13 +24,11 @@ const ModalComponent = (props) => {
   // For sending request to get linked environment list
   useEffect(() => {
     if (selectedJob !== undefined && selectedJob.value !== "") {
-      // const fetchLookUp = async () => {
-      //   const responseData = await sendRequest(
-      //     `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
-      //   );
-      //   setEnvironments(responseData.environments);
-      // };
-      // fetchLookUp();
+      sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/data/${selectedJob.key}/environments`
+      ).then((json) => {
+        setEnvironments(json.environments);
+      });
     }
     if (selectedJob === undefined || selectedJob.value !== "") {
       setEnvironments([]);
