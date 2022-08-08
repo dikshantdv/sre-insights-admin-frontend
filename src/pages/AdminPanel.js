@@ -23,10 +23,9 @@ const AdminPanel = () => {
   }, [fetchedData]);
 
   // To Handle Reschedules and task creation
-  const TaskCreationHandler = (job_id, environment_id) => {
+  const TaskCreationHandler = (job_environment_id) => {
     const body = JSON.stringify({
-      job_id,
-      environment_id,
+      job_environment_id,
     });
     sendRequest(`${process.env.REACT_APP_BACKEND_URL}/data`, "POST", body, {
       "Content-Type": "application/json",

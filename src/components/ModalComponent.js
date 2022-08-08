@@ -32,12 +32,12 @@ const ModalComponent = (props) => {
       setEnvironments([]);
       setSelectedEnvironment("");
     }
+    //eslint-disable-next-line
   }, [selectedJob]);
 
   useEffect(() => {
     if (fetchedData !== null) {
       setEnvironments(fetchedData.environments);
-      console.log(fetchedData);
     }
   }, [fetchedData]);
 
@@ -51,7 +51,7 @@ const ModalComponent = (props) => {
       selectedEnvironment.value !== ""
     ) {
       setIsModalVisible(false);
-      props.createTask(selectedJob.key, selectedEnvironment.key);
+      props.createTask(selectedEnvironment.key);
       setIsError({});
     } else {
       if (
