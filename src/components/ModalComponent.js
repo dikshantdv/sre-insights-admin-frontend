@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Modal, Spin } from "antd";
+import { Button, message, Modal, Spin } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import Dropdown from "./Dropdown";
 import { useApi } from "../hooks/api_hook";
@@ -60,9 +60,12 @@ const ModalComponent = (props) => {
         selectedEnvironment.value === ""
       ) {
         setIsError({ environment: true });
+        selectedJob !== undefined &&
+          message.error("Please select environment", 1);
       }
       if (selectedJob === undefined || selectedJob.value === "") {
         setIsError({ job: true });
+        message.error("Please select job and environment", 1);
       }
     }
   };
@@ -70,6 +73,8 @@ const ModalComponent = (props) => {
   // To close the modal
   const handleCancel = () => {
     setIsModalVisible(false);
+    setSelectedJob(undefined);
+    setIsError({});
   };
 
   // To show the modal containing dropdowns which is opened by add task button
@@ -87,6 +92,7 @@ const ModalComponent = (props) => {
           {t("buttonText")}
         </Button>
         <Modal
+          destroyOnClose
           loading="true"
           footer={[
             <Button
