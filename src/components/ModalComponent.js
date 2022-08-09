@@ -77,6 +77,7 @@ const ModalComponent = (props) => {
     return (
       <div className="modalbtn">
         <Button
+          data-textid="addbutton"
           disabled={props.isLoading}
           type="primary"
           onClick={showModal}

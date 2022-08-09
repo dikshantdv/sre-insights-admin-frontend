@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import TableComponent from "../components/TableComponent";
 import Copyright from "../components/copyright";
 import { useApi } from "../hooks/api_hook";
+import { message } from "antd";
 
 const AdminPanel = () => {
   const { fetchedData, isLoading, sendRequest } = useApi();
@@ -16,9 +17,15 @@ const AdminPanel = () => {
   }, []);
   useEffect(() => {
     if (fetchedData !== undefined) {
-      setData(fetchedData.tasks);
-      setSearchData(fetchedData.tasks);
-      setJobs(fetchedData.jobs);
+      if (fetchedData.tasks) {
+        setData(fetchedData.tasks);
+        setSearchData(fetchedData.tasks);
+        setJobs(fetchedData.jobs);
+        message.success(fetchedData.detail, 3);
+      }
+      if (fetchedData.detail && !fetchedData.tasks) {
+        message.error(fetchedData.detail, 10);
+      }
     }
   }, [fetchedData]);
 
@@ -54,6 +61,8 @@ const AdminPanel = () => {
         isLoading={isLoading}
         createTask={TaskCreationHandler}
       />
+      {/* {error && <Alert type="error" message={error} showIcon closable />} */}
+      {/* {error && message.error(error, 10)} */}
       <TableComponent
         data={data}
         isLoading={isLoading}
