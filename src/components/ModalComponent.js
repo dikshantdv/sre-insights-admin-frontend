@@ -156,7 +156,7 @@ const ModalComponent = (props) => {
       <EyeOutlined className="eye" onClick={showModal} />
       <Modal
         footer={[]}
-        title={t("c4")}
+        title={t("responsedata")}
         visible={isModalVisible}
         onCancel={handleCancel}
         style={{ textAlign: "center" }}
