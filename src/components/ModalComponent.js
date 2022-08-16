@@ -52,6 +52,7 @@ const ModalComponent = (props) => {
     ) {
       setIsModalVisible(false);
       props.createTask(selectedEnvironment.key);
+      setSelectedJob("");
       setIsError({});
     } else {
       if (

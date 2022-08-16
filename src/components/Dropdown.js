@@ -20,7 +20,6 @@ const Dropdown = (props) => {
     <Cascader
       showSearch
       status={props.isError ? "error" : ""}
-      allowClear="false"
       disabled={props.disabled ? props.disabled : false}
       onChange={changeHandler}
       value={props.value}

@@ -20,8 +20,10 @@ const AdminPanel = () => {
       if (fetchedData.tasks) {
         setData(fetchedData.tasks);
         setSearchData(fetchedData.tasks);
-        setJobs(fetchedData.jobs);
         message.success(fetchedData.detail, 3);
+      }
+      if (fetchedData.jobs) {
+        setJobs(fetchedData.jobs);
       }
       if (fetchedData.detail && !fetchedData.tasks) {
         message.error(fetchedData.detail, 10);
