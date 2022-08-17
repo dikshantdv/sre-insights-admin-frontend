@@ -8,7 +8,10 @@ const Copyright = () => {
   return (
     <div className="foot">
       <p className="copyright"> {t("fcopyright")}</p>
-      <p className="credits"> {t("fcredits")}</p>
+      <p className="credits">
+        {" "}
+        {`v.${process.env.REACT_APP_VERSION} ` + t("fcredits")}
+      </p>
     </div>
   );
 };
