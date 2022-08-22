@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Cascader } from "antd";
+import { Select } from "antd";
 import "./styles/Dropdown.css";
 
 const Dropdown = (props) => {
@@ -11,22 +11,29 @@ const Dropdown = (props) => {
     if (value === undefined) {
       props.setSelectedOption(undefined);
     } else {
-      props.setSelectedOption(label[0]);
+      props.setSelectedOption(label);
       props.setIsError({});
     }
   };
 
+  const clearHandler = () => {
+    props.setSelectedOption(undefined);
+    props.setIsError({});
+  };
+
   return (
-    <Cascader
+    <Select
       showSearch
+      allowClear
+      onClear={clearHandler}
       status={props.isError ? "error" : ""}
       disabled={props.disabled ? props.disabled : false}
-      onChange={changeHandler}
+      onSelect={changeHandler}
       value={props.value}
       options={props.options}
-      dropdownClassName={
-        props.options?.length > 6 ? "bigDropdown" : "smallDropDown"
-      }
+      // dropdownClassName={
+      //   props.options?.length > 6 ? "bigDropdown" : "smallDropDown"
+      // }
       placeholder={props.placeholder || t("phHolder")}
       style={{
         width: props.width || 300,
