@@ -6,8 +6,10 @@ import ModalComponent from "./ModalComponent";
 import "./styles/Table.css";
 
 // Function to format date
-const dateFormat = (val) => {
+const dateFormat = (val, hour = 0, min = 0) => {
   val = new Date(val);
+  val.setHours(val.getHours() + hour);
+  val.setMinutes(val.getMinutes() + min);
   val =
     ("0" + val.getDate()).slice(-2) +
     "/" +
@@ -79,7 +81,7 @@ const TableComponent = (props) => {
         return a.dueat.localeCompare(b.dueat);
       },
       render: (val) => {
-        return dateFormat(val);
+        return dateFormat(val, 5, 30);
       },
     },
 

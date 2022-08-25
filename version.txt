@@ -1,1 +1,1 @@
-sre-insights-admin-frontend:1.6.0
+sre-insights-admin-frontend:1.7.0
