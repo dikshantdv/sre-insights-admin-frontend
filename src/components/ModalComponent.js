@@ -164,7 +164,9 @@ const ModalComponent = (props) => {
       >
         <div style={{ textAlign: "center" }}>
           <p style={{ display: "inline-block", marginTop: 5 }}>
-            {props.responseData}
+            {props.responseData
+              ? props.responseData
+              : "No response data yet recieved"}
           </p>
         </div>
       </Modal>
